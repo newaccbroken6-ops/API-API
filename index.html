@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire Emote Bot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #4dff4d;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid #4dff4d;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #00c853, #009624);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 200, 83, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 200, 83, 0.6);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .result.success {
+            background: rgba(0, 200, 83, 0.2);
+            border: 2px solid #00c853;
+        }
+        
+        .result.error {
+            background: rgba(200, 0, 0, 0.2);
+            border: 2px solid #c80000;
+        }
+        
+        .result h3 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .result p {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .instructions {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid #4dff4d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #4dff4d;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Free Fire Emote Bot</h1>
+            <p class="subtitle">Connect and perform emotes in Free Fire squads</p>
+        </header>
+        
+        <div class="card">
+            <h2>Bot Connection</h2>
+            <div class="instructions">
+                <h3>How to use:</h3>
+                <ol>
+                    <li>Start the DANCE API server</li>
+                    <li>Enter the squad/team code</li>
+                    <li>Enter player UIDs (at least one)</li>
+                    <li>Select an emote ID</li>
+                    <li>Click "Perform Emote" to send the command</li>
+                </ol>
+            </div>
+            
+            <form id="emoteForm">
+                <div class="form-group">
+                    <label for="teamCode">Team Code:</label>
+                    <input type="text" id="teamCode" placeholder="Enter squad/team code" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="uid1">Player UID 1:</label>
+                    <input type="text" id="uid1" placeholder="Enter player UID" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="uid2">Player UID 2 (Optional):</label>
+                    <input type="text" id="uid2" placeholder="Enter player UID">
+                </div>
+                
+                <div class="form-group">
+                    <label for="uid3">Player UID 3 (Optional):</label>
+                    <input type="text" id="uid3" placeholder="Enter player UID">
+                </div>
+                
+                <div class="form-group">
+                    <label for="uid4">Player UID 4 (Optional):</label>
+                    <input type="text" id="uid4" placeholder="Enter player UID">
+                </div>
+                
+                <div class="form-group">
+                    <label for="emoteId">Emote ID:</label>
+                    <select id="emoteId" required>
+                        <option value="">Select an emote</option>
+                        <option value="902000306">Dab Dance</option>
+                        <option value="902000305">Floss Dance</option>
+                        <option value="902000003">Clap</option>
+                        <option value="902000016">Victory</option>
+                        <option value="902000017">Flex</option>
+                        <option value="902000019">Rock On</option>
+                        <option value="902031010">Zombie</option>
+                        <option value="902043025">Chicken</option>
+                        <option value="902043024">Running Man</option>
+                        <option value="902000020">T-Pose</option>
+                        <option value="902000021">Shuffle</option>
+                        <option value="902000023">Salute</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn">Perform Emote</button>
+            </form>
+            
+            <div id="result" class="result">
+                <h3 id="resultTitle"></h3>
+                <p id="resultMessage"></p>
+                <p id="resultDetails"></p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Free Fire Emote Bot &copy; 2025 | Connect to DANCE API</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('emoteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const teamCode = document.getElementById('teamCode').value;
+            const uid1 = document.getElementById('uid1').value;
+            const uid2 = document.getElementById('uid2').value;
+            const uid3 = document.getElementById('uid3').value;
+            const uid4 = document.getElementById('uid4').value;
+            const emoteId = document.getElementById('emoteId').value;
+            
+            // Validate required fields
+            if (!teamCode || !uid1 || !emoteId) {
+                showResult('Error', 'Please fill in all required fields', 'Team code, at least one UID, and emote ID are required.', 'error');
+                return;
+            }
+            
+            // Build URL with parameters
+            let url = `http://localhost:5000/join?tc=${encodeURIComponent(teamCode)}&emote_id=${encodeURIComponent(emoteId)}`;
+            
+            if (uid1) url += `&uid1=${encodeURIComponent(uid1)}`;
+            if (uid2) url += `&uid2=${encodeURIComponent(uid2)}`;
+            if (uid3) url += `&uid3=${encodeURIComponent(uid3)}`;
+            if (uid4) url += `&uid4=${encodeURIComponent(uid4)}`;
+            
+            // Send request
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showResult(
+                            'Success!', 
+                            data.message, 
+                            `Team Code: ${data.team_code}<br>Emote ID: ${data.emote_id}<br>Players: ${data.uids.join(', ')}`, 
+                            'success'
+                        );
+                    } else {
+                        showResult('Error', data.message, '', 'error');
+                    }
+                })
+                .catch(error => {
+                    showResult('Connection Error', 'Could not connect to the API server', 'Make sure the DANCE API is running on port 5000', 'error');
+                    console.error('Error:', error);
+                });
+        });
+        
+        function showResult(title, message, details, type) {
+            const resultDiv = document.getElementById('result');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+            const resultDetails = document.getElementById('resultDetails');
+            
+            resultTitle.textContent = title;
+            resultMessage.textContent = message;
+            resultDetails.innerHTML = details;
+            
+            resultDiv.className = 'result ' + type;
+            resultDiv.style.display = 'block';
+            
+            // Scroll to result
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
